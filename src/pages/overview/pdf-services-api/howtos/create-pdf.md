@@ -1,8 +1,5 @@
 ---
-title: Create PDF | PDF Services API
-description: |
-  Create PDFs from HTML, Microsoft Office documents, text, images, ZIPs, and URLs.
-
+title: Create PDF | How Tos | PDF Services API | Adobe PDF Services
 ---
 # Create PDF
 
@@ -12,9 +9,9 @@ Create PDFs from a variety of formats, including static and dynamic HTML; Micros
 
 See our public API Reference for :
 
-- [Create PDF from Office formats](../../../apis/index.md#tag/Create-PDF)
+- [Create PDF from Office formats](../../../apis/#tag/Create-PDF)
 
-- [Create PDF from HTML](../../../apis/index.md#tag/Html-To-PDF)
+- [Create PDF from HTML](../../../apis/#tag/Html-To-PDF)
 
 ## Create a PDF
 
@@ -29,6 +26,7 @@ following formats:
 -   Microsoft Excel (XLS, XLSX)
 -   Text (TXT, RTF)
 -   Image (BMP, JPEG, GIF, TIFF, PNG)
+-   Markdown (MARKDOWN)
 
 <InlineAlert slots="text"/>
 
@@ -37,9 +35,9 @@ For more information, refer [Benefits of embedding custom fonts](https://support
 
 <InlineAlert slots="text"/>
 
-We do not support HTML to PDF conversion for requests containing urls where:\<br/\>1. The URL Scheme is not HTTPS.\<br/\>2. The hostname resolves to a non-routable IP address. This encompasses scenarios where redirects lead to non-routable IP addresses as well.
+We do not support HTML to PDF conversion for requests containing urls where:<br/>1. The URL Scheme is not HTTPS.<br/>2. The hostname resolves to a non-routable IP address. This encompasses scenarios where redirects lead to non-routable IP addresses as well.
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 
@@ -324,7 +322,7 @@ file, the SDK supports the following formats:
 -   Microsoft Excel (XLS, XLSX)
 -   Text (TXT, RTF)
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 
@@ -628,7 +626,7 @@ the input file must be a zip file containing an index.html at the top
 level of the archive as well as any dependencies such as images, css
 files, and so on.
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 
@@ -971,7 +969,7 @@ curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopd
 
 The sample below creates a PDF file from a static HTML file with inline CSS. The file must be local.
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 
@@ -1314,7 +1312,7 @@ curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopd
 
 The sample below creates a PDF file from a HTML file specified via URL.
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 
@@ -1653,7 +1651,7 @@ manipulate the HTML DOM, thus effectively updating the source HTML file.
 This mechanism can be used to provide data to the template HTML
 dynamically prior to PDF conversion.
 
-Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="5" languages="Java, .NET, Node JS, Python, REST API" />
 

@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "PDF Services API",
-    "description": "<p><ul>\n\t<li>Learn more about using \n\t<a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/api-usage/\"> Adobe PDF Services API.</a>\n\t</li>\n\t<li> Invoking PDF Services API requires an Adobe-provided credential, <a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/gettingstarted/#step-1--getting-the-access-token\">learn more about authentication.</a>\n\t</li>\n<li><a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/#sdk\">Downloadable SDKs</a></li>\n<li><a href=\"https://raw.githubusercontent.com/AdobeDocs/pdfservices-api-documentation/eds-migration/src/pages/resources/platform-pdf-services-postman-collection.zip\" download>Click here</a> to download sample Postman collection</li>\n<li><a href=\"https://raw.githubusercontent.com/AdobeDocs/pdfservices-api-documentation/eds-migration/src/pages/resources/platform-pdf-services-with-external-storage-postman-collection.zip\">Click here</a> to download sample Postman collection with External Storage</li><li><a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/service-region-configuration-for-apis/\">Click here</a> to know more about <b>multi-region support</b> for PDF Services API</li><li><a href=\"https://community.adobe.com/t5/document-services-apis/ct-p/ct-Document-Cloud-SDK\">Support Forum</a></li><li>First released on 26th September, 2022</li><li>To use your custom external storage, click <a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/pdf-external-storage-sol\">here</a>.</li></ul></p>",
+    "description": "<p><ul>\n\t<li>Learn more about using \n\t<a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/api-usage/\"> Adobe PDF Services API.</a>\n\t</li>\n\t<li> Invoking PDF Services API requires an Adobe-provided credential, <a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/gettingstarted/#step-1--getting-the-access-token\">learn more about authentication.</a>\n\t</li>\n<li><a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/#sdk\">Downloadable SDKs</a></li>\n<li><a href=\"https://raw.githubusercontent.com/AdobeDocs/pdfservices-api-documentation/main/src/pages/resources/Platform%20PDF%20Services%20Postman%20Collection.zip\" download>Click here</a> to download sample Postman collection</li>\n<li><a href=\"https://raw.githubusercontent.com/AdobeDocs/pdfservices-api-documentation/main/src/pages/resources/Platform%20PDF%20Services%20with%20External%20Storage%20Postman%20Collection.zip\">Click here</a> to download sample Postman collection with External Storage</li><li><a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/service-region-configuration-for-apis/\">Click here</a> to know more about <b>multi-region support</b> for PDF Services API</li><li><a href=\"https://community.adobe.com/t5/document-services-apis/ct-p/ct-Document-Cloud-SDK\">Support Forum</a></li><li>First released on 26th September, 2022</li><li>To use your custom external storage, click <a href=\"https://developer.adobe.com/document-services/docs/overview/pdf-services-api/howtos/pdf-external-storage-sol\">here</a>.</li></ul></p>",
     "version": ""
   },
   "servers": [
@@ -16,7 +16,7 @@
   "tags": [
     {
       "name": "Generate Token",
-      "description": "Creates an access token using client id and client secret. Click <a href=\"https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/ims/\">here</a> to refer underlying IMS authentication APIs."
+      "description": "Creates an access token using client id and client secret. Click <a href=\"https://developer.adobe.com/developer-console/docs/guides/authentication/ServerToServerAuthentication/IMS/\">here</a> to refer underlying IMS authentication APIs."
     },
     {
       "name": "Assets",
@@ -24,7 +24,7 @@
     },
     {
       "name": "Create PDF",
-      "description": "Create PDF document from Microsoft Office documents (Word, Excel and PowerPoint) and Image file formats."
+      "description": "Create PDF document from Microsoft Office documents (Word, Excel and PowerPoint), Markdown and Image file formats."
     },
     {
       "name": "Export PDF",
@@ -2095,7 +2095,7 @@
           "Create PDF"
         ],
         "summary": "Create PDF document from non PDF document.",
-        "description": "Create PDF document from Microsoft Office documents (Word, Excel and PowerPoint) and Image file formats.",
+        "description": "Create PDF document from Microsoft Office documents (Word, Excel and PowerPoint), Markdown and Image file formats.",
         "operationId": "pdfoperations.createpdf",
         "parameters": [
           {
@@ -10008,7 +10008,7 @@
         "type": "object",
         "properties": {
           "assetID": {
-            "description": "A file assetID. Supported file formats are bmp, doc, docx, gif, jpeg, jpg, png, ppt, pptx, rtf, tif, tiff, txt, xls and xlsx. For more details <a href = 'https://developer.adobe.com/document-services/docs/apis/#tag/Assets'> click here </a>.",
+            "description": "A file assetID. Supported file formats are bmp, doc, docx, gif, jpeg, jpg, png, ppt, pptx, rtf, tif, tiff, txt, xls, xlsx and md. For more details <a href = 'https://developer.adobe.com/document-services/docs/apis/#tag/Assets'> click here </a>.",
             "type": "string"
           },
           "documentLanguage": {
@@ -10626,6 +10626,11 @@
             "type": "number",
             "default": 100
           },
+          "includeRenderedHtml": {
+            "description": "When set to `true`, the operation returns a ZIP file containing both the generated PDF and the rendered HTML content. Valid and accepted input type of files are - HTML files and ZIP files (containing HTML + assets)",
+            "type": "boolean",
+            "default": false
+          },
           "notifiers": {
             "$ref": "#/components/schemas/notifiers"
           }
@@ -10639,6 +10644,7 @@
             "pageHeight": 8.5
           },
           "waitTimeToLoad": 100,
+          "includeRenderedHtml": true,
           "notifiers": [
             {
               "type": "CALLBACK",
@@ -10703,6 +10709,11 @@
                 "description": "Specifies the maximum time (in milliseconds) to wait before finalizing the PDF. After this duration, the HTML is captured and converted into a PDF, regardless of whether all elements have finished loading or rendering. If a customer provides a custom value, it overrides the default.",
                 "type": "number",
                 "default": 100
+              },
+              "includeRenderedHtml": {
+                "description": "When set to `true`, the operation returns a ZIP file containing both the generated PDF and the rendered HTML content.Valid and accepted input type of files are - HTML files and ZIP files (containing HTML + assets)",
+                "type": "boolean",
+                "default": false
               }
             }
           },
@@ -10726,7 +10737,8 @@
               "pageWidth": 8.5,
               "pageHeight": 11
             },
-            "waitTimeToLoad": 100
+            "waitTimeToLoad": 100,
+            "includeRenderedHtml": true
           },
           "notifiers": [
             {
