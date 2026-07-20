@@ -101,7 +101,7 @@ The PDF to Markdown API is particularly valuable for:
 
 ## API Limitations
 
-For File Constraints and Processing Limits, see [Licensing and Usage Limits](../dcserviceslicensing/).
+For File Constraints and Processing Limits, see [Licensing and Usage Limits](../dcserviceslicensing.md).
 
 ### Document Requirements
 
@@ -115,13 +115,13 @@ For File Constraints and Processing Limits, see [Licensing and Usage Limits](../
 
 ## REST API
 
-See our public API Reference for [PDF to Markdown API](../../../apis/#tag/PDF-To-Markdown).
+See our public API Reference for [PDF to Markdown API](../../../apis/index.md#tag/PDF-To-Markdown).
 
 ## Get Markdown from a PDF
 
 Use the sample below to create Markdowns from PDFs
 
-Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="3" languages=".NET, Python, REST API" />
 
@@ -286,7 +286,7 @@ curl --location --request POST 'https://pdf-services.adobe.io/operation/pdftomar
 
 Use the sample below to create Markdowns from PDFs with figures embedded in the PDFs
 
-Please refer the [API usage guide](../api-usage.md) to understand how to use our APIs.
+Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
 
 <CodeBlock slots="heading, code" repeat="3" languages=".NET, Python, REST API" />
 

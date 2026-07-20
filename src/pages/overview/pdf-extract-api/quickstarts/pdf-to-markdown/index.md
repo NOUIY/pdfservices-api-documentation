@@ -6,5 +6,5 @@ title: Quickstarts | PDF to Markdown API | Adobe PDF Services
 
 The following quickstarts will help you run your first successful operation and are tailored to our supported SDKs:
 
-* [.NET](dotnet)
-* [Python](python)
+* [.NET](dotnet/index.md)
+* [Python](python/index.md)
