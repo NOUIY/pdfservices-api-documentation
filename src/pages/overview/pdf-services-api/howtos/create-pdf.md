@@ -11,7 +11,7 @@ See our public API Reference for :
 
 - [Create PDF from Office formats](../../../apis/index.md#tag/Create-PDF)
 
-- [Create PDF from HTML](../../../apis/index.md#tag/Html-To-PDF)
+- [Create PDF from HTML](../../../apis/index.md#tag/Html-to-PDF)
 
 ## Create a PDF
 
@@ -950,7 +950,7 @@ if __name__ == "__main__":
 
 ```javascript
 // Please refer our REST API docs for more information 
-// https://developer.adobe.com/document-services/docs/apis/#tag/Html-To-PDF
+// https://developer.adobe.com/document-services/docs/apis/#tag/Html-to-PDF
 
 curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopdf' \
 --header 'x-api-key: {{Placeholder for client_id}}' \
@@ -1293,7 +1293,7 @@ if __name__ == "__main__":
 
 ```javascript
 // Please refer our REST API docs for more information 
-// https://developer.adobe.com/document-services/docs/apis/#tag/Html-To-PDF
+// https://developer.adobe.com/document-services/docs/apis/#tag/Html-to-PDF
 
 curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopdf' \
 --header 'x-api-key: {{Placeholder for client_id}}' \
@@ -1619,7 +1619,7 @@ if __name__ == "__main__":
 
 ```javascript
 // Please refer our REST API docs for more information 
-// https://developer.adobe.com/document-services/docs/apis/#tag/Html-To-PDF
+// https://developer.adobe.com/document-services/docs/apis/#tag/Html-to-PDF
 
 curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopdf' \
 --header 'x-api-key: {{Placeholder for client_id}}' \
@@ -2000,7 +2000,7 @@ if __name__ == "__main__":
 
 ```javascript
 // Please refer our REST API docs for more information 
-// https://developer.adobe.com/document-services/docs/apis/#tag/Html-To-PDF
+// https://developer.adobe.com/document-services/docs/apis/#tag/Html-to-PDF
 
 curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopdf' \
 --header 'x-api-key: {{Placeholder for client_id}}' \
@@ -2015,5 +2015,201 @@ curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopd
         "pageHeight": 8.5
     }
     "waitTimeToLoad": 100,
+}'
+```
+
+## Create a PDF from HTML with rendered HTML output
+
+When converting HTML to PDF, set `includeRenderedHtml` to `true` to receive a ZIP file containing both the generated PDF and the rendered HTML content. The accepted input types are HTML files and ZIP files (containing the HTML and its assets).
+
+<InlineAlert slots="text"/>
+
+When `includeRenderedHtml` is enabled, the operation output is a ZIP file (not a PDF). Extract the archive to access the generated PDF and the rendered HTML.
+
+Please refer the [API usage guide](./api-usage.md) to understand how to use our APIs.
+
+<CodeBlock slots="heading, code" repeat="3" languages=".NET, Python, REST API" />
+
+#### .NET
+
+```javascript
+// Get the samples from https://www.adobe.com/go/pdftoolsapi_net_samples
+// Run the sample:
+// cd HTMLToPDFWithRenderedHtml/
+// dotnet run HTMLToPDFWithRenderedHtml.csproj
+
+namespace HTMLToPDFWithRenderedHtml
+{
+    class Program
+    {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+
+        static void Main()
+        {
+            //Configure the logging
+            ConfigureLogging();
+            try
+            {
+                // Initial setup, create credentials instance
+                ICredentials credentials = new ServicePrincipalCredentials(
+                    Environment.GetEnvironmentVariable("PDF_SERVICES_CLIENT_ID"),
+                    Environment.GetEnvironmentVariable("PDF_SERVICES_CLIENT_SECRET"));
+
+                // Creates a PDF Services instance
+                PDFServices pdfServices = new PDFServices(credentials);
+
+                // Creates an asset(s) from source file(s) and upload
+                using Stream inputStream = File.OpenRead(@"createPDFFromStaticHtmlInput.zip");
+                IAsset asset = pdfServices.Upload(inputStream, PDFServicesMediaType.ZIP.GetMIMETypeValue());
+
+                // Create parameters for the job
+                HTMLToPDFParams htmlToPDFParams = GetHTMLToPDFParams();
+
+                // Creates a new job instance
+                HTMLToPDFJob htmlToPDFJob = new HTMLToPDFJob(asset).SetParams(htmlToPDFParams);
+
+                // Submits the job and gets the job result
+                String location = pdfServices.Submit(htmlToPDFJob);
+                PDFServicesResponse<HTMLToPDFResult> pdfServicesResponse =
+                    pdfServices.GetJobResult<HTMLToPDFResult>(location, typeof(HTMLToPDFResult));
+
+                // Get content from the resulting asset(s)
+                IAsset resultAsset = pdfServicesResponse.Result.Asset;
+                StreamAsset streamAsset = pdfServices.GetContent(resultAsset);
+
+                // When includeRenderedHtml is enabled, the output is a ZIP (PDF + rendered HTML)
+                String outputFilePath = "/output/createPdfWithRenderedHtmlOutput.zip";
+                new FileInfo(Directory.GetCurrentDirectory() + outputFilePath).Directory.Create();
+                Stream outputStream = File.OpenWrite(Directory.GetCurrentDirectory() + outputFilePath);
+                streamAsset.Stream.CopyTo(outputStream);
+                outputStream.Close();
+            }
+            catch (ServiceUsageException ex)
+            {
+                log.Error("Exception encountered while executing operation", ex);
+            }
+            catch (ServiceApiException ex)
+            {
+                log.Error("Exception encountered while executing operation", ex);
+            }
+            catch (SDKException ex)
+            {
+                log.Error("Exception encountered while executing operation", ex);
+            }
+            catch (IOException ex)
+            {
+                log.Error("Exception encountered while executing operation", ex);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Exception encountered while executing operation", ex);
+            }
+        }
+
+        private static HTMLToPDFParams GetHTMLToPDFParams()
+        {
+            // Define the page layout, in this case an 8 x 11.5 inch page (effectively portrait orientation).
+            PageLayout pageLayout = new PageLayout();
+            pageLayout.SetPageSize(8, 11.5);
+
+            // Enable rendered HTML output along with the generated PDF.
+            HTMLToPDFParams htmlToPDFParams = HTMLToPDFParams.HTMLToPDFParamsBuilder()
+                .IncludeRenderedHtml(true)
+                .WithPageLayout(pageLayout)
+                .Build();
+            return htmlToPDFParams;
+        }
+
+
+        static void ConfigureLogging()
+        {
+            ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+        }
+    }
+}
+```
+
+#### Python
+
+```python
+# Get the samples https://github.com/adobe/pdfservices-python-sdk-samples
+# Run the sample:
+# python src/htmltopdf/html_to_pdf_with_rendered_html.py
+
+# Initialize the logger
+logging.basicConfig(level=logging.INFO)
+
+class HTMLToPDFWithRenderedHtml:
+    def __init__(self):
+        try:
+            file = open('./createPDFFromStaticHtmlInput.zip', 'rb')
+            input_stream = file.read()
+            file.close()
+
+            # Initial setup, create credentials instance
+            credentials = ServicePrincipalCredentials(
+                client_id=os.getenv('PDF_SERVICES_CLIENT_ID'),
+                client_secret=os.getenv('PDF_SERVICES_CLIENT_SECRET')
+            )
+
+            # Creates a PDF Services instance
+            pdf_services = PDFServices(credentials=credentials)
+
+            # Creates an asset(s) from source file(s) and upload
+            input_asset = pdf_services.upload(input_stream=input_stream, mime_type=PDFServicesMediaType.ZIP)
+
+            # Create parameters for the job
+            html_to_pdf_params = self.get_html_to_pdf_params()
+
+            # Creates a new job instance
+            html_to_pdf_job = HTMLtoPDFJob(input_asset=input_asset, html_to_pdf_params=html_to_pdf_params)
+
+            # Submit the job and gets the job result
+            location = pdf_services.submit(html_to_pdf_job)
+            pdf_services_response = pdf_services.get_job_result(location, HTMLtoPDFResult)
+
+            # Get content from the resulting asset(s)
+            result_asset: CloudAsset = pdf_services_response.get_result().get_asset()
+            stream_asset: StreamAsset = pdf_services.get_content(result_asset)
+
+            # When include_rendered_html is enabled, the output is a ZIP (PDF + rendered HTML)
+            output_file_path = 'output/HTMLToPDFWithRenderedHtml.zip'
+            with open(output_file_path, "wb") as file:
+                file.write(stream_asset.get_input_stream())
+
+        except (ServiceApiException, ServiceUsageException, SdkException) as e:
+            logging.exception(f'Exception encountered while executing operation: {e}')
+
+    @staticmethod
+    def get_html_to_pdf_params() -> HTMLtoPDFParams:
+        # Define the page layout, in this case an 8 x 11.5 inch page (effectively portrait orientation)
+        page_layout = PageLayout(page_height=11.5, page_width=8)
+        # Enable rendered HTML output along with the generated PDF
+        return HTMLtoPDFParams(page_layout=page_layout, include_rendered_html=True)
+
+if __name__ == "__main__":
+    HTMLToPDFWithRenderedHtml()
+```
+
+#### REST API
+
+```javascript
+// Please refer our REST API docs for more information 
+// https://developer.adobe.com/document-services/docs/apis/#tag/Html-to-PDF
+
+curl --location --request POST 'https://pdf-services.adobe.io/operation/htmltopdf' \
+--header 'x-api-key: {{Placeholder for client_id}}' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {{Placeholder for token}}' \
+--data-raw '{
+    "assetID": "urn:aaid:AS:UE1:23c30ee0-2e4d-46d6-87f2-087832fca718",
+    "json": "{}",
+    "includeRenderedHtml": true,
+    "pageLayout": {
+        "pageWidth": 11,
+        "pageHeight": 8.5
+    },
+    "waitTimeToLoad": 100
 }'
 ```
