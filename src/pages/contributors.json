@@ -21,7 +21,7 @@
         "https://avatars.githubusercontent.com/u/276200381?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4"
       ],
-      "lastUpdated": "7/6/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/",
@@ -124,6 +124,7 @@
     {
       "page": "/overview/document-generation-api/quickstarts/dotnet/",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/276200381?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4",
         "https://avatars.githubusercontent.com/u/22620821?v=4",
@@ -131,7 +132,7 @@
         "https://avatars.githubusercontent.com/u/32520775?v=4",
         "https://avatars.githubusercontent.com/u/393660?v=4"
       ],
-      "lastUpdated": "6/11/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/document-generation-api/quickstarts/java/",
@@ -1011,13 +1012,14 @@
     {
       "page": "/overview/pdf-accessibility-auto-tag-api/quickstarts/dotnet/",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4",
         "https://avatars.githubusercontent.com/u/22620821?v=4",
         "https://avatars.githubusercontent.com/u/119481807?v=4",
         "https://avatars.githubusercontent.com/u/4571811?v=4",
         "https://avatars.githubusercontent.com/u/32357056?v=4"
       ],
-      "lastUpdated": "5/1/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-accessibility-auto-tag-api/quickstarts/java/",
@@ -1122,13 +1124,14 @@
     {
       "page": "/overview/pdf-electronic-seal-api/quickstarts/dotnet/",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4",
         "https://avatars.githubusercontent.com/u/22620821?v=4",
         "https://avatars.githubusercontent.com/u/119481807?v=4",
         "https://avatars.githubusercontent.com/u/95277167?v=4",
         "https://avatars.githubusercontent.com/u/95292088?v=4"
       ],
-      "lastUpdated": "5/1/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-electronic-seal-api/quickstarts/java/",
@@ -1336,9 +1339,10 @@
     {
       "page": "/overview/pdf-extract-api/quickstarts/extract-pdf/dotnet/",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4"
       ],
-      "lastUpdated": "5/1/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-extract-api/quickstarts/extract-pdf/java/",
@@ -1480,7 +1484,7 @@
         "https://avatars.githubusercontent.com/u/4571811?v=4",
         "https://avatars.githubusercontent.com/u/101633389?v=4"
       ],
-      "lastUpdated": "7/20/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-services-api/howtos/delete-pages",
@@ -1605,11 +1609,12 @@
     {
       "page": "/overview/pdf-services-api/howtos/pdf-to-markdown-api",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4",
         "https://avatars.githubusercontent.com/u/22620821?v=4",
         "https://avatars.githubusercontent.com/u/56316668?v=4"
       ],
-      "lastUpdated": "4/30/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-services-api/howtos/pdf-watermark-api",
@@ -1728,6 +1733,7 @@
     {
       "page": "/overview/pdf-services-api/quickstarts/dotnet/",
       "avatars": [
+        "https://avatars.githubusercontent.com/u/298222561?v=4",
         "https://avatars.githubusercontent.com/u/14320591?v=4",
         "https://avatars.githubusercontent.com/u/22620821?v=4",
         "https://avatars.githubusercontent.com/u/119481807?v=4",
@@ -1735,7 +1741,7 @@
         "https://avatars.githubusercontent.com/u/32520775?v=4",
         "https://avatars.githubusercontent.com/u/393660?v=4"
       ],
-      "lastUpdated": "5/1/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/pdf-services-api/quickstarts/java/",
@@ -1797,7 +1803,7 @@
         "https://avatars.githubusercontent.com/u/117627709?v=4",
         "https://avatars.githubusercontent.com/u/4571811?v=4"
       ],
-      "lastUpdated": "7/20/2026"
+      "lastUpdated": "7/22/2026"
     },
     {
       "page": "/overview/security",
