@@ -183,14 +183,14 @@ Upgrading to the latest SDK should not break existing applications.
 
 ## Change history
 
-### July 28, 2026; .NET SDK 4.4.0 Release
+### August 6, 2026; .NET SDK 4.4.0 Release
 
 - Added support for [PDF to Markdown](pdf-extract-api/howtos/pdf-to-markdown-api.md) operation in PDF Services .NET SDK.
 - Introduced support for generating PDFs from Markdown files in Create PDF operation
 - Added includeRenderedHtml Parameter in the HTML to PDF operation
 - Introduced includeHeaderFooter and tagEncapsulatedText Params in Extract operation
 
-### July 28, 2026; Python SDK 4.3.0 Release
+### August 6, 2026; Python SDK 4.3.0 Release
 
 - Added support for [PDF to Markdown](pdf-extract-api/howtos/pdf-to-markdown-api.md) operation in PDF Services Python SDK.
 - Introduced support for generating PDFs from Markdown files in Create PDF operation
