@@ -10631,6 +10631,11 @@
             "type": "boolean",
             "default": false
           },
+          "createTaggedPDF": {
+            "description": "Determines whether the output PDF should be tagged. Tagged PDFs improve heading levels, reading order, lists, links, references, and tables, while adding some processing overhead. They also enhance screen reader navigation. If not specified, the API generates a tagged PDF by default.",
+            "type": "boolean",
+            "default": true
+          },
           "notifiers": {
             "$ref": "#/components/schemas/notifiers"
           }
@@ -10645,6 +10650,7 @@
           },
           "waitTimeToLoad": 100,
           "includeRenderedHtml": true,
+          "createTaggedPDF": true,
           "notifiers": [
             {
               "type": "CALLBACK",
@@ -10714,6 +10720,11 @@
                 "description": "When set to `true`, the operation returns a ZIP file containing both the generated PDF and the rendered HTML content.Valid and accepted input type of files are - HTML files and ZIP files (containing HTML + assets)",
                 "type": "boolean",
                 "default": false
+              },
+              "createTaggedPDF": {
+                "description": "Determines whether the output PDF should be tagged. Tagged PDFs improve heading levels, reading order, lists, links, references, and tables, while adding some processing overhead. They also enhance screen reader navigation. If not specified, the API generates a tagged PDF by default.",
+                "type": "boolean",
+                "default": true
               }
             }
           },
@@ -10738,7 +10749,8 @@
               "pageHeight": 11
             },
             "waitTimeToLoad": 100,
-            "includeRenderedHtml": true
+            "includeRenderedHtml": true,
+            "createTaggedPDF": true
           },
           "notifiers": [
             {
