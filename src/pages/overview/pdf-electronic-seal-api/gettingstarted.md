@@ -424,7 +424,7 @@ For security reasons you may wish to confirm the installer's authenticity. To do
 3.  Verify the hash in the downloaded file matches the value published here.
 
 ```
-PAJ0eB+wUhgvLcIcH37IUgfFV7TxG2wWhcfaON57hWmpDFiPqAM6kgKFfyzAWVAnkzAQoQEWLPxgSIASNy5d8A==
+0Ty6Fbm0lrhae7mn8nyAOsyuyHIkmTXCtSUgDf4zS5dNaH/ImM9kOarVzH/IyzTFmxpb698et9k1JTRa5q6yMQ==
 ```
 
 #### Logging
@@ -667,14 +667,14 @@ For security reasons you may wish to confirm the installer's authenticity. To do
 1.  After downloading the package zip, run following command
 
 ```
-pip hash <download_dir>/pdfservices-sdk-4.1.0.tar.gz
+pip hash <download_dir>/pdfservices_sdk-4.3.0-py3-none-any.whl
 ```
 
 2.  Above command will return the hash of downloaded package.
 3.  Verify the hash matches the value published here.
 
 ```
-ec24e0ddb8da9a968e8b8aa94203f48afb496dc99e505f6debcf0c2d51307cd2
+be606b33f54d933d42eb8dc6977c6d30f7cb19ef768566a579159efc906b5bb8
 ```
 
 ## Public API

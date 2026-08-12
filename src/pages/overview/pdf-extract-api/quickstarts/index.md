@@ -10,3 +10,4 @@ description: |
 Want to quickly test out Extract PDF API and PDF To Markdown API? Choose your operation to get started:
 
 * [Extract PDF](extract-pdf/index.md)
+* [PDF to Markdown](pdf-to-markdown/index.md)

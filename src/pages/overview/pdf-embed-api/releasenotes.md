@@ -12,6 +12,12 @@ the changes below for each release.
 
 ## Change history
 
+### July 29, 2026
+| Change | Description                                                            |
+| ------ | ---------------------------------------------------------------------- |
+| Bug fix | Fixed issue where the PDF viewer was cut off from the PDF area.  |
+| Bug fix | Fixed the "Opening Document 100%" text failing WCAG 2 AA contrast.  |
+
 ### March 9, 2026
 | Change | Description                                                            |
 | ------ | ---------------------------------------------------------------------- |

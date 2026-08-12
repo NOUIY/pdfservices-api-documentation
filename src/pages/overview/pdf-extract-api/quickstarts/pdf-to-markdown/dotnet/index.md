@@ -1,13 +1,10 @@
 ---
-title: .NET quickstart | PDF Accessibility Auto-Tag API
-description: |
-  Tag an input PDF with the Accessibility Auto-Tag API using the .NET SDK.
-
+title: .NET | Quickstarts | PDF to Markdown API | Adobe PDF Services
 ---
 
-# Quickstart for PDF Accessibility Auto-Tag API (.NET)
+# Quickstart for PDF to Markdown API (.NET)
 
-To get started using Adobe PDF Accessibility Auto-Tag API, let's walk through a simple scenario - taking an input PDF document and running PDF Accessibility Auto-Tag API against it. Once the PDF has been tagged, we'll provide the document with tags and optionally, a report file. In this guide, we will walk you through the complete process for creating a program that will accomplish this task.
+To get started using Adobe PDF to Markdown API, let's walk through a simple scenario - taking an input PDF document and extracting its elements into Markdown format. Once the PDF has been converted, we'll save the Markdown output. In this guide, we will walk you through the complete process for creating a program that will accomplish this task. 
 
 ## Prerequisites
 
@@ -21,7 +18,7 @@ To complete this guide, you will need:
   
 ## Step One: Getting credentials
 
-1) To begin, open your browser to [https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-accessibility-auto-tag-api](https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-accessibility-auto-tag-api). If you are not already logged in to Adobe.com, you will need to sign in or create a new user. Using a personal email account is recommend and not a federated ID.
+1) To begin, open your browser to [https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-extract-api](https://acrobatservices.adobe.com/dc-integration-creation-app-cdn/main.html?api=pdf-extract-api). If you are not already logged in to Adobe.com, you will need to sign in or create a new user. Using a personal email account is recommend and not a federated ID.
 
 ![Sign in](./shot1.png)
 
@@ -33,21 +30,21 @@ To complete this guide, you will need:
 
 5) Click the checkbox saying you agree to the developer terms and then click "Create credentials."
 
-![Project setup](./shot2-spc.png)
+![Project setup](./shot2_spc.png)
 
 6) After your credentials are created, they are automatically  downloaded:
 
-![alt](./shot3-spc.png)
+![alt](./shot3_spc.png)
 
 ## Step Two: Setting up the project
 
 1) In your Downloads folder, find the ZIP file with your credentials: PDFServicesSDK-.NetSamples.zip. If you unzip that archive, you will find a folder of samples and the `pdfservices-api-credentials.json` file.
 
-![alt](./shot5-spc.png)
+![alt](./shot5_spc.png)
 
 2) Take the `pdfservices-api-credentials.json` file and place it in a new directory.
 
-3) In your new directory, create a new file, `AutotagPDF.csproj`. This file will declare our requirements as well as help define the application we're creating.
+3) In your new directory, create a new file, `PDFToMarkdown.csproj`. This file will declare our requirements as well as help define the application we're creating.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -58,12 +55,12 @@ To complete this guide, you will need:
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="log4net" Version="3.2.0" />
         <PackageReference Include="Adobe.PDFServicesSDK" Version="4.4.0" />
+        <PackageReference Include="log4net" Version="3.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="Adobe Accesibility Auto-Tag API Sample.pdf">
+        <None Update="Adobe Extract API Sample.pdf">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="log4net.config">
@@ -73,9 +70,11 @@ To complete this guide, you will need:
 
 </Project>
 ```
+
 This file will define what dependencies we need and how the application will be built.
 
-Our application will take a PDF, `Adobe Accesibility Auto-Tag API Sample.pdf` (included with the sample project download) and tag its contents. The results will be saved in a given directory `/output`.
+Our application will take a PDF, `Adobe Extract API Sample.pdf` (downloadable from [here](/
+Adobe%20Extract%20API%20Sample.pdf)) and extract it's contents. The results will be saved as a `.md` file with a timestamp in the filename.
 
 4) In your editor, open the directory where you previously copied the credentials and created the `csproj` file. Create a new file, `Program.cs`. 
 
@@ -94,6 +93,7 @@ using Adobe.PDFServicesSDK.auth;
 using Adobe.PDFServicesSDK.exception;
 using Adobe.PDFServicesSDK.io;
 using Adobe.PDFServicesSDK.pdfjobs.jobs;
+using Adobe.PDFServicesSDK.pdfjobs.parameters.pdftomarkdown;
 using Adobe.PDFServicesSDK.pdfjobs.results;
 using log4net;
 using log4net.Config;
@@ -103,7 +103,7 @@ using log4net.Repository;
 2) Now let's define our main class and `Main` method:
 
 ```javascript
-namespace AutotagPDF
+namespace PDFToMarkdown
 {
     class Program
     {
@@ -125,7 +125,7 @@ namespace AutotagPDF
   - `export PDF_SERVICES_CLIENT_ID=<YOUR CLIENT ID>`
   - `export PDF_SERVICES_CLIENT_SECRET=<YOUR CLIENT SECRET>`
 
-4) Next, we can create our credentials and PDFServices instance:
+4) Next, we can create our credentials and use them to create a PDF Services instance
 
 ```javascript
 // Initial setup, create credentials instance
@@ -140,57 +140,65 @@ PDFServices pdfServices = new PDFServices(credentials);
 5) Now, let's upload the asset:
 
 ```javascript
+// Creates an asset from source file and upload
+using Stream inputStream = File.OpenRead(@"Adobe Extract API Sample.pdf");
 IAsset asset = pdfServices.Upload(inputStream, PDFServicesMediaType.PDF.GetMIMETypeValue());
 ```
 
-We define input stream for the PDF that will be tagged. (Use the sample PDF included with the sample project download.) In a real application, these values would be typically be dynamic.
-Then we upload the content of input stream and specify the input media type as PDF.
+We define what PDF will be converted. In a real application, these values would typically be dynamic.
 
-6) Now, let's create the job and parameters:
+6) Now, let's create the job:
 
 ```javascript
 // Create parameters for the job
-AutotagPDFParams autotagPDFParams = AutotagPDFParams.AutotagPDFParamsBuilder().GenerateReport().Build();
+PDFToMarkdownParams pdfToMarkdownParams = new PDFToMarkdownParams.Builder()
+        .WithGetFigures(true)
+        .Build();
 
 // Creates a new job instance
-AutotagPDFJob autotagPDFJob = new AutotagPDFJob(asset).SetParams(autotagPDFParams);
+PDFToMarkdownJob pdfToMarkdownJob = new PDFToMarkdownJob(asset)
+        .SetParams(pdfToMarkdownParams);
 ```
 
-This set of code defines what we're doing (an Auto-Tag operation),
-it defines parameters for the Auto-Tag job. PDF Accessibility Auto-Tag API has a few different options, but in this example, we're simply asking for a basic tagging operation, which returns the tagged PDF document and an XLSX report of the document.
-
+This set of code defines what we're doing (a PDF to Markdown conversion operation). The `WithGetFigures(true)` option will extract figures and images as base64-embedded images in the Markdown output.
 
 7) The next code block submits the job and gets the job result:
 
 ```javascript
 // Submits the job and gets the job result
-String location = pdfServices.Submit(autotagPDFJob);
-PDFServicesResponse<AutotagPDFResult> pdfServicesResponse =
-        pdfServices.GetJobResult<AutotagPDFResult>(location, typeof(AutotagPDFResult));
+String location = pdfServices.Submit(pdfToMarkdownJob);
+PDFServicesResponse<PDFToMarkdownResult> pdfServicesResponse =
+        pdfServices.GetJobResult<PDFToMarkdownResult>(location, typeof(PDFToMarkdownResult));
 
 // Get content from the resulting asset(s)
-IAsset resultAsset = pdfServicesResponse.Result.TaggedPDF;
-IAsset resultAssetReport = pdfServicesResponse.Result.Report;
+IAsset resultAsset = pdfServicesResponse.Result.Asset;
 StreamAsset streamAsset = pdfServices.GetContent(resultAsset);
-StreamAsset streamAssetReport = pdfServices.GetContent(resultAssetReport)
 ```
+
+This code runs the PDF to Markdown conversion process and gets the content of the result asset.
 
 8) The next code block saves the result at the specified location:
 
 ```javascript
-// Creating output streams and copying stream asset's content to it
-Stream outputStream = File.OpenWrite(Directory.GetCurrentDirectory() + "output/autotag-tagged.pdf");
-Stream outputStreamReport =
-        File.OpenWrite(Directory.GetCurrentDirectory() + "output/autotag-report.xlsx");
+// Creating output file path with timestamp
+String outputFilePath = CreateOutputFilePath();
+new FileInfo(Directory.GetCurrentDirectory() + outputFilePath).Directory.Create();
+Stream outputStream = File.OpenWrite(Directory.GetCurrentDirectory() + outputFilePath);
 streamAsset.Stream.CopyTo(outputStream);
-streamAssetReport.Stream.CopyTo(outputStreamReport);
 outputStream.Close();
-outputStreamReport.Close();
 ```
 
-This code runs the Auto-Tagging process and then stores the result files in the provided output directory.
+9) Add a helper method to create the output file path with a timestamp:
 
-![Example running in the command line](./shot9-ga.png)
+```javascript
+private static String CreateOutputFilePath()
+{
+    String timeStamp = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss");
+    return ("/output/pdfToMarkdown" + timeStamp + ".md");
+}
+```
+
+![Example running in the command line](./shot9.png)
 
 Here's the complete application (`Program.cs`):
 
@@ -203,13 +211,13 @@ using Adobe.PDFServicesSDK.auth;
 using Adobe.PDFServicesSDK.exception;
 using Adobe.PDFServicesSDK.io;
 using Adobe.PDFServicesSDK.pdfjobs.jobs;
-using Adobe.PDFServicesSDK.pdfjobs.parameters.autotag;
+using Adobe.PDFServicesSDK.pdfjobs.parameters.pdftomarkdown;
 using Adobe.PDFServicesSDK.pdfjobs.results;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
 
-namespace AutotagPDF
+namespace PDFToMarkdown
 {
     class Program
     {
@@ -217,55 +225,37 @@ namespace AutotagPDF
         
         static void Main()
         {
-            // Configure the logging
             ConfigureLogging();
             try
             {
-                // Initial setup, create credentials instance
                 ICredentials credentials = new ServicePrincipalCredentials(
                     Environment.GetEnvironmentVariable("PDF_SERVICES_CLIENT_ID"),
                     Environment.GetEnvironmentVariable("PDF_SERVICES_CLIENT_SECRET"));
 
-                // Creates a PDF Services instance
                 PDFServices pdfServices = new PDFServices(credentials);
 
-                // Creates an asset(s) from source file(s) and upload
-                using Stream inputStream = File.OpenRead(@"Adobe Accesibility Auto-Tag API Sample.pdf");
+                using Stream inputStream = File.OpenRead(@"pdfToMarkdownInput.pdf");
                 IAsset asset = pdfServices.Upload(inputStream, PDFServicesMediaType.PDF.GetMIMETypeValue());
 
-                // Create parameters for the job
-                AutotagPDFParams autotagPDFParams = AutotagPDFParams.AutotagPDFParamsBuilder().GenerateReport().Build();
+                PDFToMarkdownParams pdfToMarkdownParams = new PDFToMarkdownParams.Builder()
+                    .WithGetFigures(true)
+                    .Build();
 
-                // Creates a new job instance
-                AutotagPDFJob autotagPDFJob = new AutotagPDFJob(asset).SetParams(autotagPDFParams);
+                PDFToMarkdownJob pdfToMarkdownJob = new PDFToMarkdownJob(asset)
+                    .SetParams(pdfToMarkdownParams);
 
-                // Submits the job and gets the job result
-                String location = pdfServices.Submit(autotagPDFJob);
-                PDFServicesResponse<AutotagPDFResult> pdfServicesResponse =
-                    pdfServices.GetJobResult<AutotagPDFResult>(location, typeof(AutotagPDFResult));
+                String location = pdfServices.Submit(pdfToMarkdownJob);
+                PDFServicesResponse<PDFToMarkdownResult> pdfServicesResponse =
+                    pdfServices.GetJobResult<PDFToMarkdownResult>(location, typeof(PDFToMarkdownResult));
 
-                // Get content from the resulting asset(s)
-                IAsset resultAsset = pdfServicesResponse.Result.TaggedPDF;
-                IAsset resultAssetReport = pdfServicesResponse.Result.Report;
+                IAsset resultAsset = pdfServicesResponse.Result.Asset;
                 StreamAsset streamAsset = pdfServices.GetContent(resultAsset);
-                StreamAsset streamAssetReport = pdfServices.GetContent(resultAssetReport);
 
-                // Creating output streams and copying stream asset's content to it
-                String outputFilePath = "/output/autotag-tagged.pdf";
+                String outputFilePath = CreateOutputFilePath();
                 new FileInfo(Directory.GetCurrentDirectory() + outputFilePath).Directory.Create();
                 Stream outputStream = File.OpenWrite(Directory.GetCurrentDirectory() + outputFilePath);
-
-                String outputFilePathReport = "/output/autotag-report.xlsx";
-                new FileInfo(Directory.GetCurrentDirectory() + outputFilePath).Directory.Create();
-                Stream outputStreamReport =
-                    File.OpenWrite(Directory.GetCurrentDirectory() + outputFilePathReport);
                 streamAsset.Stream.CopyTo(outputStream);
-                streamAssetReport.Stream.CopyTo(outputStreamReport);
                 outputStream.Close();
-                outputStreamReport.Close();
-                
-                Console.WriteLine("Saving asset at " + Directory.GetCurrentDirectory() + outputFilePath);
-                Console.WriteLine("Saving asset at " + Directory.GetCurrentDirectory() + outputFilePathReport);
             }
             catch (ServiceUsageException ex)
             {
@@ -293,6 +283,12 @@ namespace AutotagPDF
         {
             ILoggerRepository logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+        }
+
+        private static String CreateOutputFilePath()
+        {
+            String timeStamp = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH'-'mm'-'ss");
+            return ("/output/pdfToMarkdown" + timeStamp + ".md");
         }
     }
 }
